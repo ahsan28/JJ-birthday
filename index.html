@@ -1313,15 +1313,15 @@
   </div>
 
   <section class="reveal" id="reveal" aria-hidden="true" aria-label="Final birthday reveal">
-    <div class="reveal-card">
-      <p class="eyebrow">wish approved</p>
-      <h2>Joyeux Anniversaire, Jean-Jacques.</h2>
-      <p>
-        59 years of sharp thinking, generous teaching, quiet strength, and a truly kind heart.
-      </p>
-      <button class="btn" type="button" id="close-reveal">return to page</button>
-    </div>
-  </section>
+      <div class="reveal-card">
+        <p class="eyebrow">wish approved</p>
+        <h2>Joyeux Anniversaire, Jean-Jacques.</h2>
+        <p>
+          <span id="age-years-text">59</span> years of sharp thinking, generous teaching, quiet strength, and a truly kind heart.
+        </p>
+        <button class="btn" type="button" id="close-reveal">return to page</button>
+      </div>
+    </section>
 
   <footer>
     Built with care by Ahsan &amp; Kamil · birthday checks passing
@@ -1333,10 +1333,22 @@
     const majorBuildEl = document.getElementById("major-version-build");
     const daysLiveEl = document.getElementById("days-live");
     const daysLiveTickerEl = document.getElementById("days-live-ticker");
+    const ageYearsText = document.getElementById("age-years-text");
 
     function formatTwoDigits(value) {
       return String(value).padStart(2, "0");
     }
+
+    const terminal = document.getElementById("terminal");
+    const terminalLines = [
+      [{ text: "$ git checkout birthday/jj-59", className: "prompt" }],
+      [{ text: "switched to a branch made with care", className: "success" }],
+      [{ text: "$ npm run celebrate -- --boss jean-jacques", className: "prompt" }],
+      [{ text: "mind: brilliant  |  heart: generous  |  team: grateful", className: "gold" }],
+      [{ text: "$ git commit -m \"add: a warm wish for jj\"", className: "prompt" }],
+      [{ text: "[main 0603jj] joyeux anniversaire from Ahsan & Kamil", className: "success" }],
+      [{ text: "$ open --warmth --respect", className: "prompt" }]
+    ];
 
     function updateRuntimeMetrics() {
       const now = new Date();
@@ -1363,21 +1375,14 @@
       majorBuildEl.textContent = `${formatTwoDigits(hoursSince % 24)}.${formatTwoDigits(minutesSince)}.${formatTwoDigits(secondsSince)}`;
       daysLiveEl.textContent = daysLive.toLocaleString();
       daysLiveTickerEl.textContent = `${formatTwoDigits(ageHours)}h ${formatTwoDigits(ageMinutes)}m ${formatTwoDigits(ageSeconds)}s`;
+      if (ageYearsText) {
+        ageYearsText.textContent = String(Math.max(0, majorVersions));
+      }
+      terminalLines[0][0].text = `$ git checkout birthday/jj-${Math.max(0, majorVersions)}`;
     }
 
     updateRuntimeMetrics();
     window.setInterval(updateRuntimeMetrics, 1000);
-
-    const terminal = document.getElementById("terminal");
-    const terminalLines = [
-      [{ text: "$ git checkout birthday/jj-59", className: "prompt" }],
-      [{ text: "switched to a branch made with care", className: "success" }],
-      [{ text: "$ npm run celebrate -- --boss jean-jacques", className: "prompt" }],
-      [{ text: "mind: brilliant  |  heart: generous  |  team: grateful", className: "gold" }],
-      [{ text: "$ git commit -m \"add: a warm wish for jj\"", className: "prompt" }],
-      [{ text: "[main 0603jj] joyeux anniversaire from Ahsan & Kamil", className: "success" }],
-      [{ text: "$ open --warmth --respect", className: "prompt" }]
-    ];
 
     let terminalLine = 0;
     let terminalChar = 0;
