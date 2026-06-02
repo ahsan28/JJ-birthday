@@ -459,11 +459,7 @@
       font-weight: 500;
     }
 
-    .major-version-build {
-      font-size: 0.56em;
-    }
-
-    .metric .major-version-build {
+    .metric-detail {
       display: block;
       margin-top: 6px;
       font-size: 0.34em;
@@ -476,8 +472,15 @@
       transition: opacity 220ms ease, max-height 220ms ease, transform 220ms ease;
     }
 
-    .metric:hover .major-version-build,
-    .metric:focus-within .major-version-build {
+    .major-version-build,
+    .days-live-ticker {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.56em;
+    }
+
+    .metric:hover .metric-detail,
+    .metric:focus-within .metric-detail {
       opacity: 0.95;
       max-height: 1.4em;
       transform: translateY(0);
@@ -1160,11 +1163,12 @@
         <div class="metrics" aria-label="Birthday runtime statistics">
           <div class="metric">
             <strong id="major-versions">59</strong>
-            <span class="major-version-build" id="major-version-build">00.00.00</span>
+            <span class="metric-detail major-version-build" id="major-version-build">00.00.00</span>
             <span>major versions</span>
           </div>
           <div class="metric">
             <strong id="days-live">0</strong>
+            <span class="metric-detail days-live-ticker" id="days-live-ticker">00.00.00</span>
             <span>days deployed</span>
           </div>
           <div class="metric">
@@ -1324,10 +1328,11 @@
   </footer>
 
   <script>
-    const birthDate = new Date("1967-06-03T00:00:00");
+    const birthDate = new Date(1967, 5, 3);
     const majorVersionEl = document.getElementById("major-versions");
     const majorBuildEl = document.getElementById("major-version-build");
     const daysLiveEl = document.getElementById("days-live");
+    const daysLiveTickerEl = document.getElementById("days-live-ticker");
 
     function formatTwoDigits(value) {
       return String(value).padStart(2, "0");
@@ -1349,10 +1354,15 @@
       const secondsSince = Math.floor((ageMs % 60000) / 1000);
 
       const daysLive = Math.max(0, Math.floor((now - birthDate) / 86400000));
+      const ageMsForDisplay = Math.max(0, now - birthDate);
+      const ageHours = Math.floor((ageMsForDisplay % 86400000) / 3600000);
+      const ageMinutes = Math.floor((ageMsForDisplay % 3600000) / 60000);
+      const ageSeconds = Math.floor((ageMsForDisplay % 60000) / 1000);
 
       majorVersionEl.textContent = String(Math.max(0, majorVersions));
       majorBuildEl.textContent = `${formatTwoDigits(hoursSince % 24)}.${formatTwoDigits(minutesSince)}.${formatTwoDigits(secondsSince)}`;
       daysLiveEl.textContent = daysLive.toLocaleString();
+      daysLiveTickerEl.textContent = `${formatTwoDigits(ageHours)}h ${formatTwoDigits(ageMinutes)}m ${formatTwoDigits(ageSeconds)}s`;
     }
 
     updateRuntimeMetrics();
