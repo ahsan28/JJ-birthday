@@ -616,9 +616,9 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: var(--photo) center / contain no-repeat;
-      transform: scale(1.035);
-      transition: transform 260ms ease, opacity 260ms ease;
+      background: var(--photo) var(--pos, center) / cover no-repeat;
+      transform: scale(1.025);
+      transition: transform 320ms ease, opacity 260ms ease, background-size 320ms ease;
     }
 
     .memory-card::after,
@@ -627,7 +627,7 @@
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: linear-gradient(180deg, rgba(5, 10, 17, 0), rgba(5, 10, 17, 0.08) 48%, rgba(5, 10, 17, 0.68));
+      background: linear-gradient(180deg, rgba(5, 10, 17, 0), rgba(5, 10, 17, 0.05) 50%, rgba(5, 10, 17, 0.58));
       pointer-events: none;
       transition: background 220ms ease;
     }
@@ -720,14 +720,15 @@
     .memory-card:focus-within::before,
     .story-card:hover::before,
     .story-card:focus-within::before {
-      transform: scale(0.96);
+      background-size: contain;
+      transform: scale(0.98);
     }
 
     .memory-card:hover::after,
     .memory-card:focus-within::after,
     .story-card:hover::after,
     .story-card:focus-within::after {
-      background: linear-gradient(180deg, rgba(5, 10, 17, 0), rgba(5, 10, 17, 0.04) 46%, rgba(5, 10, 17, 0.82));
+      background: linear-gradient(180deg, rgba(5, 10, 17, 0), rgba(5, 10, 17, 0.18) 42%, rgba(5, 10, 17, 0.9));
     }
 
     .memory-card:hover p,
@@ -843,11 +844,11 @@
       z-index: 34;
       inset: 0;
       display: grid;
-      place-items: center;
+      place-items: center end;
       padding: 24px;
       background:
-        linear-gradient(0deg, rgba(4, 8, 13, 0.84), rgba(4, 8, 13, 0.68)),
-        url("JJ-images/websie ready image as web background as hjj in the middle, in the blue-gray bg.png") center bottom / cover;
+        linear-gradient(90deg, rgba(4, 8, 13, 0.3), rgba(4, 8, 13, 0.78) 62%, rgba(4, 8, 13, 0.9)),
+        url("JJ-images/websie ready image as web background as hjj in the middle, in the blue-gray bg.png") left bottom / cover;
       opacity: 0;
       pointer-events: none;
       transition: opacity 260ms ease;
@@ -859,19 +860,20 @@
     }
 
     .reveal-card {
-      width: min(900px, 100%);
+      width: min(720px, 100%);
+      margin-right: min(4vw, 56px);
       padding: clamp(28px, 6vw, 72px);
       border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 8px;
-      background: rgba(6, 11, 18, 0.56);
+      background: rgba(6, 11, 18, 0.42);
       box-shadow: var(--shadow);
       text-align: center;
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(12px);
     }
 
     .reveal-card h2 {
       margin-bottom: 18px;
-      font-size: clamp(2.8rem, 8vw, 7rem);
+      font-size: clamp(2.6rem, 6vw, 5.8rem);
     }
 
     .reveal-card p {
@@ -1005,6 +1007,17 @@
         color: rgba(247, 248, 251, 0.78);
       }
 
+      .reveal {
+        place-items: center;
+        background:
+          linear-gradient(0deg, rgba(4, 8, 13, 0.82), rgba(4, 8, 13, 0.52)),
+          url("JJ-images/websie ready image as web background as hjj in the middle, in the blue-gray bg.png") center bottom / cover;
+      }
+
+      .reveal-card {
+        margin-right: 0;
+      }
+
       .terminal-body {
         min-height: 250px;
         font-size: 0.76rem;
@@ -1055,7 +1068,7 @@
           <p class="eyebrow">birthday release · june 3</p>
           <h1>Happy Birthday, Jean-Jacques.</h1>
           <p class="hero-copy">
-            For a rare mind, a generous heart, and a leader who makes people feel seen.
+            For a brilliant mind, a generous heart, and a leader who turns ambition into clarity.
           </p>
           <div class="hero-actions">
             <button class="btn primary" type="button" data-action="reveal">open the wish</button>
@@ -1076,9 +1089,9 @@
     <section class="section" id="runtime">
       <div class="section-inner">
         <div class="section-head">
-          <h2>A life with excellent architecture.</h2>
+          <h2>A life, beautifully architected.</h2>
           <p class="section-note">
-            A small dev-style dashboard for an impact that is much harder to measure: calm, kindness, questions, and open minds.
+            A small dev-style dashboard for an impact no metric can really hold: calm judgment, kind pressure, and minds opened with care.
           </p>
         </div>
 
@@ -1108,30 +1121,30 @@
         <div class="section-head">
           <h2>Many gifts. One Jean-Jacques.</h2>
           <p class="section-note">
-            Thoughtful, precise, human, quietly funny, and full of substance without needing to be loud.
+            Precise without being cold, demanding without being harsh, and quietly funny in the moments that matter.
           </p>
         </div>
 
         <div class="roles" aria-label="Jean-Jacques tribute roles">
           <button class="role active" type="button" style="--role-image: url('JJ-images/high-tech-manueveer-by-JJ.jpeg')" data-role="neuroscientist">
             <small>01</small>
-            <h3>The Brilliant Mind</h3>
-            <p>He finds the signal before most of us finish describing the noise.</p>
+            <h3>The Signal Finder</h3>
+            <p>He sees the pattern early, then helps the rest of us see it too.</p>
           </button>
           <button class="role" type="button" style="--role-image: url('JJ-images/portrait-original.jpeg')" data-role="teacher">
             <small>02</small>
             <h3>The Teacher</h3>
-            <p>Patient, sharp, and somehow able to make complex things feel reasonable.</p>
+            <p>Patient, sharp, and unusually good at making complexity feel human.</p>
           </button>
           <button class="role" type="button" style="--role-image: url('JJ-images/websie ready image as web background as hjj in the middle, in the blue-gray bg.png')" data-role="founder">
             <small>03</small>
-            <h3>The Builder</h3>
-            <p>He stays with ideas until they become a place, a team, and a standard.</p>
+            <h3>The Architect</h3>
+            <p>He stays with ideas until they become systems, standards, and people moving together.</p>
           </button>
           <button class="role" type="button" style="--role-image: url('JJ-images/a old group photo of us, many people inside though.jpeg')" data-role="humanist">
             <small>04</small>
             <h3>The Humanist</h3>
-            <p>Behind the research and strategy, the instinct is simple: care about people.</p>
+            <p>Behind the research and strategy, the quiet center remains care.</p>
           </button>
         </div>
       </div>
@@ -1145,13 +1158,13 @@
             <p class="eyebrow">a note from Ahsan and Kamil</p>
             <h2>Dear Jean-Jacques,</h2>
             <p>
-              We first wanted to make a video, but it did not feel honest enough. So we made this instead: a small page, built with care, real memories, and words that sound like us.
+              We first imagined a video, but it did not feel personal enough. So we built this instead: real images, careful words, and a small interface made with affection.
             </p>
             <p>
-              Thank you for being more than a boss. You are a thinker, a teacher, a challenger, and a kind person with a great heart. You push us to think better, usually with that quiet smile that makes pressure feel educational.
+              Thank you for being more than a boss. You are a thinker, a teacher, a challenger, and a kind person with a great heart. You raise the standard while still making people feel valued.
             </p>
             <p>
-              May this year bring you health, peace, laughter, strong coffee when needed, and many moments where you feel deeply appreciated.
+              May this year bring health, peace, laughter, strong coffee when needed, and many quiet reminders of how deeply you are appreciated.
             </p>
             <div class="signature">
               Happy 59th Birthday, Jean-Jacques.
@@ -1176,20 +1189,20 @@
             <h3>A quiet table, a real memory.</h3>
             <p>Ahsan with Jean-Jacques and Ela. Warm, simple, real.</p>
           </div>
-          <div class="memory-card" style="--photo: url('JJ-images/JJ and me, having good time outside, indoor seating in small round table, both laughing.jpeg')">
+          <div class="memory-card" style="--photo: url('JJ-images/JJ and me, having good time outside, indoor seating in small round table, both laughing.jpeg'); --pos: center">
             <h3>The laugh between the work.</h3>
             <p>JJ and Ahsan, proof that good collaboration also needs good humor.</p>
           </div>
         </div>
 
         <div class="story-grid" aria-label="More team and family moments">
-          <div class="story-card wide" style="--photo: url('JJ-images/JJ, seating beside a lake in quick trip to malaysia national zoo, very soothing scenario, ralaxing.jpg')">
+          <div class="story-card wide" style="--photo: url('JJ-images/JJ, seating beside a lake in quick trip to malaysia national zoo, very soothing scenario, ralaxing.jpg'); --pos: right center">
             <h3>A quiet pause in Malaysia.</h3>
             <p>Calm by the lake, the kind of still moment that suits a busy mind.</p>
           </div>
 
           <div class="story-stack">
-            <div class="story-card" style="--photo: url('JJ-images/JJ and his son JMM having dinner, JMM also an active team member.jpeg')">
+            <div class="story-card" style="--photo: url('JJ-images/JJ and his son JMM having dinner, JMM also an active team member.jpeg'); --pos: center">
               <h3>Family at the table.</h3>
               <p>Jean-Jacques with JMM: family, dinner, and another trusted team member.</p>
             </div>
@@ -1215,7 +1228,7 @@
         <p class="eyebrow">final birthday request</p>
         <h2>One more year of health, joy, clear ideas, and good surprises.</h2>
         <p>
-          No conflicts found. All checks pass. This birthday wish is warmly approved.
+          No conflicts found. All checks pass. This wish is ready for production.
         </p>
         <button class="btn primary" type="button" data-action="reveal">approve the wish</button>
       </div>
