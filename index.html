@@ -459,6 +459,26 @@
       font-weight: 500;
     }
 
+    .major-version-build {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.56em;
+      line-height: 1;
+      color: rgba(247, 248, 251, 0.8);
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(4px);
+      transition: opacity 220ms ease, max-height 220ms ease, transform 220ms ease;
+    }
+
+    .metric:hover .major-version-build,
+    .metric:focus-within .major-version-build {
+      opacity: 0.95;
+      max-height: 1.4em;
+      transform: translateY(0);
+    }
+
     .metric span {
       color: var(--quiet);
       font-size: 0.83rem;
@@ -501,6 +521,16 @@
       transition: opacity 220ms ease;
     }
 
+    .role::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 10, 17, 0.16);
+      opacity: 0.02;
+      transition: opacity 220ms ease;
+      z-index: 0;
+    }
+
     .role > * {
       position: relative;
       z-index: 1;
@@ -512,6 +542,12 @@
       opacity: 1;
     }
 
+    .role:hover::after,
+    .role:focus-visible::after,
+    .role.active::after {
+      opacity: 0.28;
+    }
+
     .role:focus-visible {
       outline: 2px solid var(--cyan);
       outline-offset: -2px;
@@ -519,23 +555,39 @@
 
     .role small {
       margin-bottom: 10px;
-      color: var(--gold);
+      color: rgba(245, 211, 120, 0.72);
       font-size: 0.73rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
+      transition: color 180ms ease;
     }
 
     .role h3 {
       margin-bottom: 10px;
       font-size: clamp(1.3rem, 2.1vw, 1.9rem);
       line-height: 1.05;
+      color: rgba(247, 248, 251, 0.82);
+      transition: color 180ms ease;
     }
 
     .role p {
       min-height: 4.4em;
       margin-bottom: 0;
-      color: rgba(247, 248, 251, 0.78);
+      color: rgba(247, 248, 251, 0.62);
       line-height: 1.48;
+      transition: color 180ms ease;
+    }
+
+    .role:hover small,
+    .role:hover h3,
+    .role:hover p,
+    .role:focus-visible small,
+    .role:focus-visible h3,
+    .role:focus-visible p,
+    .role.active small,
+    .role.active h3,
+    .role.active p {
+      color: rgba(247, 248, 251, 0.95);
     }
 
     .letter-wrap {
@@ -1104,7 +1156,8 @@
         <div class="metrics" aria-label="Birthday runtime statistics">
           <div class="metric">
             <strong>
-              <span id="major-versions">59</span>.<span id="major-version-build">00.00.00</span>
+              <span id="major-versions">59</span>
+              <span class="major-version-build" id="major-version-build">00.00.00</span>
             </strong>
             <span>major versions</span>
           </div>
