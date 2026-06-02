@@ -1103,7 +1103,9 @@
 
         <div class="metrics" aria-label="Birthday runtime statistics">
           <div class="metric">
-            <strong>59</strong>
+            <strong>
+              <span id="major-versions">59</span>.<span id="major-version-build">00.00.00</span>
+            </strong>
             <span>major versions</span>
           </div>
           <div class="metric">
@@ -1268,9 +1270,38 @@
 
   <script>
     const birthDate = new Date("1967-06-03T00:00:00");
-    const today = new Date();
-    const daysLive = Math.max(0, Math.floor((today - birthDate) / 86400000));
-    document.getElementById("days-live").textContent = daysLive.toLocaleString();
+    const majorVersionEl = document.getElementById("major-versions");
+    const majorBuildEl = document.getElementById("major-version-build");
+    const daysLiveEl = document.getElementById("days-live");
+
+    function formatTwoDigits(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function updateRuntimeMetrics() {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+      const majorBirthdayDate = now >= today ? today : new Date(now.getFullYear() - 1, birthDate.getMonth(), birthDate.getDate());
+
+      let majorVersions = now.getFullYear() - birthDate.getFullYear();
+      if (now < today) {
+        majorVersions -= 1;
+      }
+
+      const ageMs = now - majorBirthdayDate;
+      const hoursSince = Math.floor(ageMs / 3600000);
+      const minutesSince = Math.floor((ageMs % 3600000) / 60000);
+      const secondsSince = Math.floor((ageMs % 60000) / 1000);
+
+      const daysLive = Math.max(0, Math.floor((now - birthDate) / 86400000));
+
+      majorVersionEl.textContent = String(Math.max(0, majorVersions));
+      majorBuildEl.textContent = `${formatTwoDigits(hoursSince % 24)}.${formatTwoDigits(minutesSince)}.${formatTwoDigits(secondsSince)}`;
+      daysLiveEl.textContent = daysLive.toLocaleString();
+    }
+
+    updateRuntimeMetrics();
+    window.setInterval(updateRuntimeMetrics, 1000);
 
     const terminal = document.getElementById("terminal");
     const terminalLines = [
