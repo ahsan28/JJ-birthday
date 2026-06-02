@@ -584,11 +584,11 @@
 
     .countdown-panel {
       position: relative;
-      border-radius: 0 0 12px 12px;
+      border-radius: 0 0 20px 20px;
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      transition: max-height 260ms ease, opacity 220ms ease, margin-top 260ms ease;
+      transition: max-height 260ms ease, opacity 220ms ease, margin-top 260ms ease, border-color 220ms ease;
       padding-top: 0;
       margin-top: 0;
     }
@@ -596,7 +596,7 @@
     .countdown-panel::before {
       content: "";
       position: absolute;
-      top: 1px;
+      top: 0;
       left: 50%;
       width: var(--countdown-width);
       aspect-ratio: 2 / 1;
@@ -607,6 +607,7 @@
       opacity: 0.18;
       pointer-events: none;
       transition: opacity 220ms ease, transform 260ms ease;
+      clip-path: inset(35% 0 0 0);
     }
 
     .birthday-countdown:not(.open) .countdown-panel::before {
@@ -656,6 +657,7 @@
       border-radius: 999px 999px 0 0;
       position: relative;
       overflow: hidden;
+      clip-path: inset(18% 0 0 0);
       background:
         linear-gradient(180deg, rgba(3, 12, 20, 0.04), rgba(3, 12, 20, 0)),
         rgba(7, 16, 27, 0.58);
