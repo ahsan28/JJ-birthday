@@ -525,9 +525,8 @@
       color: var(--ink);
       background: linear-gradient(90deg, rgba(88, 166, 255, 0.16), rgba(121, 228, 255, 0.1));
       padding: 11px 12px;
-      font-weight: 620;
-      letter-spacing: 0.04em;
-      text-transform: lowercase;
+      font-weight: 400;
+      letter-spacing: 0.02em;
       text-align: left;
       overflow: hidden;
       backdrop-filter: blur(10px);
@@ -563,7 +562,8 @@
       text-align: center;
       color: rgba(247, 248, 251, 0.88);
       font-size: 0.84rem;
-      letter-spacing: 0.05em;
+      font-weight: 400;
+      letter-spacing: 0.015em;
     }
 
     .countdown-arrow {
@@ -703,13 +703,14 @@
     .countdown-semicircle span {
       position: absolute;
       left: 50%;
-      top: 4px;
+      top: 42%;
       transform: translateX(-50%);
       font-size: 0.66rem;
       font-weight: 300;
       color: rgba(247, 248, 251, 0.7);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      white-space: nowrap;
     }
 
     .roles {
@@ -1402,7 +1403,7 @@
 
         <div class="birthday-countdown" id="birthday-countdown">
           <button class="countdown-toggle" id="countdown-toggle" type="button" aria-controls="countdown-panel" aria-expanded="false">
-            <span>next birthday countdown</span>
+            <span>Next birthday countdown</span>
             <i class="countdown-arrow" aria-hidden="true"></i>
           </button>
           <div class="countdown-panel" id="countdown-panel" aria-live="polite">
