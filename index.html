@@ -460,9 +460,13 @@
     }
 
     .major-version-build {
+      font-size: 0.56em;
+    }
+
+    .metric .major-version-build {
       display: block;
       margin-top: 6px;
-      font-size: 0.56em;
+      font-size: 0.34em;
       line-height: 1;
       color: rgba(247, 248, 251, 0.8);
       opacity: 0;
@@ -1155,10 +1159,8 @@
 
         <div class="metrics" aria-label="Birthday runtime statistics">
           <div class="metric">
-            <strong>
-              <span id="major-versions">59</span>
-              <span class="major-version-build" id="major-version-build">00.00.00</span>
-            </strong>
+            <strong id="major-versions">59</strong>
+            <span class="major-version-build" id="major-version-build">00.00.00</span>
             <span>major versions</span>
           </div>
           <div class="metric">
