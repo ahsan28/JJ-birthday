@@ -606,7 +606,9 @@
       padding: 24px;
       border: 1px solid rgba(255, 255, 255, 0.13);
       border-radius: 8px;
-      background-color: rgba(4, 8, 13, 0.78);
+      background:
+        var(--photo) var(--pos, center) / contain no-repeat,
+        rgba(4, 8, 13, 0.82);
       overflow: hidden;
     }
 
@@ -617,8 +619,9 @@
       inset: 0;
       z-index: 0;
       background: var(--photo) var(--pos, center) / cover no-repeat;
-      transform: scale(1.025);
-      transition: transform 320ms ease, opacity 260ms ease, background-size 320ms ease;
+      opacity: 1;
+      transform: scale(1.018);
+      transition: transform 720ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 720ms cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .memory-card::after,
@@ -675,7 +678,9 @@
       padding: 22px;
       border: 1px solid rgba(255, 255, 255, 0.13);
       border-radius: 8px;
-      background-color: rgba(4, 8, 13, 0.78);
+      background:
+        var(--photo) var(--pos, center) / contain no-repeat,
+        rgba(4, 8, 13, 0.82);
       overflow: hidden;
     }
 
@@ -720,8 +725,8 @@
     .memory-card:focus-within::before,
     .story-card:hover::before,
     .story-card:focus-within::before {
-      background-size: contain;
-      transform: scale(0.98);
+      opacity: 0.22;
+      transform: scale(1);
     }
 
     .memory-card:hover::after,
