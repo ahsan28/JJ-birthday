@@ -493,6 +493,145 @@
       text-transform: uppercase;
     }
 
+    .birthday-countdown {
+      position: relative;
+      margin-top: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(7, 16, 27, 0.66), rgba(5, 12, 22, 0.86));
+      padding: 14px 16px 18px;
+      overflow: hidden;
+    }
+
+    .countdown-toggle {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--ink);
+      background: rgba(88, 166, 255, 0.14);
+      padding: 11px 12px;
+      font-weight: 620;
+      letter-spacing: 0.04em;
+      text-transform: lowercase;
+      text-align: left;
+    }
+
+    .countdown-toggle span {
+      color: rgba(247, 248, 251, 0.88);
+      font-size: 0.84rem;
+      letter-spacing: 0.05em;
+    }
+
+    .countdown-arrow {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid rgba(247, 248, 251, 0.75);
+      border-bottom: 2px solid rgba(247, 248, 251, 0.75);
+      transform: rotate(-45deg);
+      transition: transform 220ms ease;
+    }
+
+    .birthday-countdown.open .countdown-arrow {
+      transform: rotate(135deg);
+    }
+
+    .countdown-panel {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 260ms ease, opacity 220ms ease;
+      padding-top: 0;
+    }
+
+    .birthday-countdown.open .countdown-panel {
+      max-height: 220px;
+      opacity: 1;
+      padding-top: 12px;
+    }
+
+    .countdown-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--quiet);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.68rem;
+    }
+
+    .countdown-meta strong {
+      color: var(--ink);
+      font-size: 0.92rem;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .countdown-semicircle {
+      --progress-angle: 180deg;
+      width: min(280px, 84vw);
+      aspect-ratio: 2 / 1;
+      margin: 2px auto 0;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-bottom: none;
+      border-radius: 999px 999px 0 0;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(3, 12, 20, 0.04), rgba(3, 12, 20, 0)),
+        rgba(7, 16, 27, 0.58);
+    }
+
+    .countdown-semicircle::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 160%;
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      border: 2px solid rgba(232, 197, 122, 0.45);
+      border-bottom-color: transparent;
+      transform-origin: 50% 50%;
+      transform: translateX(-50%) rotate(calc(-180deg + var(--progress-angle, 180deg)));
+      transition: transform 180ms linear;
+      filter: drop-shadow(0 0 10px rgba(121, 228, 255, 0.2));
+      clip-path: polygon(0 50%, 50% 0, 100% 50%, 100% 100%, 0% 100%);
+    }
+
+    .countdown-semicircle::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 12px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      transform: translate(-50%, 50%);
+      background: #e8c57a;
+      box-shadow: 0 0 0 5px rgba(232, 197, 122, 0.16);
+    }
+
+    .countdown-semicircle span {
+      position: absolute;
+      left: 50%;
+      top: 4px;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      color: rgba(247, 248, 251, 0.7);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     .roles {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1180,6 +1319,22 @@
             <span>good influence</span>
           </div>
         </div>
+
+        <div class="birthday-countdown" id="birthday-countdown">
+          <button class="countdown-toggle" id="countdown-toggle" type="button" aria-controls="countdown-panel" aria-expanded="false">
+            <span>next birthday countdown</span>
+            <i class="countdown-arrow" aria-hidden="true"></i>
+          </button>
+          <div class="countdown-panel" id="countdown-panel" aria-live="polite">
+            <div class="countdown-meta">
+              <span>local time window</span>
+              <strong id="countdown-value">--:--</strong>
+            </div>
+            <div class="countdown-semicircle" id="countdown-semicircle" aria-hidden="true">
+              <span>time to birthday</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1334,6 +1489,13 @@
     const daysLiveEl = document.getElementById("days-live");
     const daysLiveTickerEl = document.getElementById("days-live-ticker");
     const ageYearsText = document.getElementById("age-years-text");
+    const countdownShell = document.getElementById("birthday-countdown");
+    const countdownPanel = document.getElementById("countdown-panel");
+    const countdownToggle = document.getElementById("countdown-toggle");
+    const countdownValue = document.getElementById("countdown-value");
+    const countdownSemicircle = document.getElementById("countdown-semicircle");
+
+    const oneHourMs = 60 * 60 * 1000;
 
     function formatTwoDigits(value) {
       return String(value).padStart(2, "0");
@@ -1371,6 +1533,27 @@
       const ageMinutes = Math.floor((ageMsForDisplay % 3600000) / 60000);
       const ageSeconds = Math.floor((ageMsForDisplay % 60000) / 1000);
 
+      const nextBirthdayThisYear = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+      const nextBirthday = now < nextBirthdayThisYear ? nextBirthdayThisYear : new Date(now.getFullYear() + 1, birthDate.getMonth(), birthDate.getDate());
+      const msToNextBirthday = nextBirthday - now;
+      const secondsToBirthday = Math.max(0, Math.floor(msToNextBirthday / 1000));
+      const minutesToBirthday = Math.floor(secondsToBirthday / 60);
+      const secondsRemainder = secondsToBirthday % 60;
+      const inFinalHour = msToNextBirthday > 0 && msToNextBirthday <= oneHourMs;
+      const countdownProgress = inFinalHour ? 1 - (msToNextBirthday / oneHourMs) : 0;
+
+      if (inFinalHour) {
+        countdownShell.classList.add("open");
+        countdownToggle.setAttribute("aria-expanded", "true");
+      } else {
+        countdownShell.classList.remove("open");
+        countdownToggle.setAttribute("aria-expanded", "false");
+      }
+      countdownPanel.setAttribute("aria-hidden", String(!countdownShell.classList.contains("open")));
+
+      countdownValue.textContent = `${formatTwoDigits(minutesToBirthday)}m ${formatTwoDigits(secondsRemainder)}s`;
+    countdownSemicircle.style.setProperty("--progress-angle", `${180 * countdownProgress}deg`);
+
       majorVersionEl.textContent = String(Math.max(0, majorVersions));
       majorBuildEl.textContent = `${formatTwoDigits(hoursSince % 24)}.${formatTwoDigits(minutesSince)}.${formatTwoDigits(secondsSince)}`;
       daysLiveEl.textContent = daysLive.toLocaleString();
@@ -1379,6 +1562,13 @@
         ageYearsText.textContent = String(Math.max(0, majorVersions));
       }
       terminalLines[0][0].text = `$ git checkout birthday/jj-${Math.max(0, majorVersions)}`;
+    }
+
+    if (countdownToggle) {
+      countdownToggle.addEventListener("click", () => {
+        const isOpen = countdownShell.classList.toggle("open");
+        countdownToggle.setAttribute("aria-expanded", String(isOpen));
+      });
     }
 
     updateRuntimeMetrics();
